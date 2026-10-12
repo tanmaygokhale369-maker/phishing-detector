@@ -1,0 +1,12 @@
+# Large dataset files — too big for GitHub
+ml/data/raw/
+ml/data/processed/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Environment
+.env
+venv/
