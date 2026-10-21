@@ -424,6 +424,10 @@ def train(feat_df: pd.DataFrame):
     # Evaluate
     y_pred = model.predict(X_test_sc)
     acc    = accuracy_score(y_test, y_pred)
+    report = classification_report(
+        y_test, y_pred, target_names=["Legitimate", "Phishing"],
+        output_dict=True
+    )
     print(f"\nAccuracy: {acc*100:.2f}%")
     print(classification_report(y_test, y_pred,
           target_names=["Legitimate","Phishing"]))
@@ -433,6 +437,15 @@ def train(feat_df: pd.DataFrame):
     joblib.dump(scaler, MODEL_DIR / "scaler.pkl")
     with open(MODEL_DIR / "feature_list.json", "w") as f:
         json.dump(FEATURE_NAMES, f, indent=2)
+    with open(MODEL_DIR / "model_metrics.json", "w") as f:
+        json.dump({
+            "accuracy": float(acc),
+            "train_rows": len(X_train),
+            "test_rows": len(X_test),
+            "features": len(FEATURE_NAMES),
+            "evaluation": "Stratified random 80/20 split (random_state=42)",
+            "classification_report": report,
+        }, f, indent=2)
 
     print(f"\n{'='*60}")
     print(f"MODEL SAVED!")

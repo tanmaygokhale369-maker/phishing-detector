@@ -1,0 +1,7 @@
+{
+  "accuracy": 0.9802,
+  "train_rows": 548334,
+  "test_rows": 137084,
+  "features": 40,
+  "evaluation": "Stratified random 80/20 split (random_state=42)"
+}

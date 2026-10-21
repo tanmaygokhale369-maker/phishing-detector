@@ -92,7 +92,15 @@ The updater repeatedly fetches available feeds and refreshes the cache every 30 
 
 ## Training data and model
 
-Training datasets belong under `ml/data/raw/` and processed outputs under `ml/data/processed/`; neither directory is committed. The scripts in `ml/` use these local files to explore data and train models. The trained model, scaler, and feature list used by the API are stored in `ml/models/`.
+Training datasets belong under `ml/data/raw/` and processed outputs under `ml/data/processed/`; neither directory is committed. The scripts in `ml/` use these local files to explore data and train models. The trained model, scaler, feature list, and evaluation metrics used by the API are stored in `ml/models/`.
+
+To retrain the API-compatible URL-only model from the repository root, run:
+
+```powershell
+python ml/step3_mega_train.py
+```
+
+This script reports held-out accuracy and class metrics, then saves the model, feature list, and evaluation details to `ml/models/`. The latest run trained on 685,418 unique URLs and achieved **98.02% accuracy** on a stratified random 80/20 split (137,084 test rows). A random split can share patterns or domains across training and test data, so this result may overstate performance on entirely new domains. Treat it as an evaluation on this dataset, not a guarantee of real-world accuracy.
 
 ## Important
 

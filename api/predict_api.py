@@ -15,6 +15,8 @@ model  = joblib.load(f"{MODEL_DIR}/phishing_model.pkl")
 scaler = joblib.load(f"{MODEL_DIR}/scaler.pkl")
 with open(f"{MODEL_DIR}/feature_list.json") as f:
     FEATURES = json.load(f)
+with open(f"{MODEL_DIR}/model_metrics.json") as f:
+    MODEL_METRICS = json.load(f)
 print(f"✓ Model loaded — {len(FEATURES)} URL-only features")
 
 # ── Load live cache ───────────────────────────────────────
@@ -165,7 +167,7 @@ def home():
     return {
         "status": "Phishing Detector API v2",
         "model": f"XGBoost — {len(FEATURES)} URL-only features",
-        "accuracy": "98.03%",
+        "accuracy": f"{MODEL_METRICS['accuracy']:.2%}",
         "live_cache": len(live_urls),
     }
 
@@ -261,5 +263,5 @@ def predict(req: URLRequest):
         "confidence":  round(prob, 4),
         "risk_level":  risk,
         "signals":     signals or ["URL pattern analysis complete"],
-        "source":      f"ML Model (98% accuracy, {len(FEATURES)} features)"
+        "source":      f"ML Model ({MODEL_METRICS['accuracy']:.2%} test accuracy, {len(FEATURES)} features)"
     }
