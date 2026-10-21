@@ -1,6 +1,7 @@
 # Large dataset files — too big for GitHub
 ml/data/raw/
 ml/data/processed/
+ml/models/live_phishing_urls.json
 
 # Python cache
 __pycache__/
